@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "UnderTaker141"
+version = "0.1.0"
+description = ""
+authors = ["AbdelrhmanNile <abdelrhmannile@gmail.com>"]
+license = "mit"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+kivymd = "^1.1.1"
+pyaml = "^23.7.0"
+sqlalchemy = "^2.0.20"
+igdb-api-v4 = "^0.2.0"
+beautifulsoup4 = "^4.12.2"
+pandas = "^2.0.3"
+requests = "^2.31.0"
+lxml = "^4.9.3"
+qbittorrent-api = "^2023.7.52"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

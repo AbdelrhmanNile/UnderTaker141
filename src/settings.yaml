@@ -1,8 +1,8 @@
 general:
   save_path: /home/pirate/Downloads
 igdb:
-  twitch_client_id: uy9rkr8k2uhklu1qlsx4vr2vwbeues
-  twitch_client_secret: nsbfj1ta79s2nelm4h1dx5m2zl9dsa
+  twitch_client_id: youridhere
+  twitch_client_secret: yoursecrethere
 qbittorrent_api:
   host: localhost
   password: adminadmin

@@ -1,5 +1,5 @@
 import qbittorrentapi
-
+import os
 import re
 
 class JCQbt:
@@ -7,6 +7,9 @@ class JCQbt:
     A class to interact with qBittorrent, specifically for JC141 related downloads.
     """
     def __init__(self, host, port, username, password, save_path):
+        
+        os.system("qbittorrent &")
+        
         # connect to the client
         self.qbt_client = qbittorrentapi.Client(
             host=host,
@@ -14,12 +17,6 @@ class JCQbt:
             username=username,
             password=password,
         )
-        
-        # verify that the client is connected
-        try:
-            self.qbt_client.auth_log_in()
-        except qbittorrentapi.LoginFailed as e:
-            print(e)
             
         self.save_path = save_path
             

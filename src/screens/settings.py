@@ -4,7 +4,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.dialog import MDDialog
-from utils import get_settings
+from utils import get_settings, write_settings
 import yaml
 from database import Database
 db = Database("games.db")
@@ -67,8 +67,7 @@ class Settings(Plugin):
         self.settings_yaml["igdb"]["twitch_client_id"] = self.twitch_client_id.text
         self.settings_yaml["igdb"]["twitch_client_secret"] = self.twitch_client_secret.text
         
-        with open("settings.yaml", "w") as f:
-            f.write(yaml.dump(self.settings_yaml))
+        write_settings(self.settings_yaml)
             
         self.settings_yaml = get_settings()
         

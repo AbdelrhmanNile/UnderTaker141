@@ -39,9 +39,7 @@ class Library(Plugin):
         
         
         self.load_library()
-        
-        #Clock.schedule_interval(lambda dt: self.update_library(), 1)
-        
+                
             
             
     def load_library(self):

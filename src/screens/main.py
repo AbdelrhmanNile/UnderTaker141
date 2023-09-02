@@ -46,7 +46,7 @@ class Main(Plugin):
         self.layout.add_widget(self.scrollview) 
         
         # fill grid with 50 random games
-        #self.randomize()
+        self.randomize()
     
     # randomize grid
     def randomize(self):

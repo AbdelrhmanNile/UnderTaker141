@@ -12,6 +12,7 @@ from .plugin import Plugin, PluginData
 
 from importlib import import_module
 import yaml
+import os
 
 class MainScreen(MDScreen):
     def __init__(self, **kwargs):
@@ -30,7 +31,7 @@ class MainScreen(MDScreen):
         
         self.boxlayout1 = MDBoxLayout(orientation="vertical")
         self.boxlayout2 = MDBoxLayout(adaptive_height=True, md_bg_color="#fffcf4", padding="12dp")
-        self.boxlayout2.add_widget(MDLabel(text="Flutter 3la zobry", adaptive_height=True, pos_hint={"center_y": 0.5}))
+        self.boxlayout2.add_widget(MDLabel(text="UnderTaker141", adaptive_height=True, pos_hint={"center_y": 0.5}))
         
         self.boxlayout3 = MDBoxLayout()
         self.rail = Rail()
@@ -54,8 +55,10 @@ class MainScreen(MDScreen):
         self.add_widget(self.nav_layout)
         
     def load_plugins(self) -> dict: # load plugins from plugins.yaml
-        
-        with open('screens.yaml') as f:
+        abs_path = os.path.dirname(__file__)
+        abs_path = abs_path.split("/widgets/core")[0]
+        screens_path = os.path.join(abs_path, "screens.yaml")
+        with open(screens_path) as f:
             plugins_config = yaml.safe_load(f)
     
         plugins = []

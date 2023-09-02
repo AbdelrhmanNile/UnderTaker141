@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, ForeignKey, Column, Integer, String, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
+import os
 
 Base = declarative_base()
 
@@ -55,7 +56,11 @@ class Database:
     """
     def __init__(self, db_file):
         self.db_file = db_file
-        self.engine = create_engine(f'sqlite:///database/{db_file}', echo=False)
+        
+        abs_path = os.path.dirname(__file__)
+        db_file_path = os.path.join(abs_path, db_file)
+        
+        self.engine = create_engine(f'sqlite:///{db_file_path}', echo=False)
         self.session = sessionmaker(bind=self.engine)()
         Base.metadata.create_all(self.engine)
         

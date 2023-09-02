@@ -80,7 +80,7 @@ export TK_LIBRARY="${APPDIR}/usr/share/tcltk/tk8.5"
 export TKPATH="${TK_LIBRARY}"
 
 # Export SSL certificates
-export SSL_CERT_FILE="${APPDIR}/opt/_internal/cert.pem"
+export SSL_CERT_FILE="${APPDIR}/opt/_internal/certs.pem"
 
 # Call the entry point
 for opt in "$@"

@@ -55,7 +55,7 @@ class MainScreen(MDScreen):
         
     def load_plugins(self) -> dict: # load plugins from plugins.yaml
         
-        with open('./screens.yaml') as f:
+        with open('screens.yaml') as f:
             plugins_config = yaml.safe_load(f)
     
         plugins = []

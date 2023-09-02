@@ -121,7 +121,7 @@ chmod +x /tmp/appimagetool.AppImage
 # create the dist dir for our result to be uploaded as an artifact
 # note tha gitlab will only accept artifacts that are in the build dir (cwd)
 mkdir dist
-/tmp/appimagetool.AppImage /tmp/kivy_appdir dist/helloWorld.AppImage
+/tmp/appimagetool.AppImage /tmp/kivy_appdir dist/UnderTaker141.AppImage
 
 #######################
 # OUTPUT VERSION INFO #

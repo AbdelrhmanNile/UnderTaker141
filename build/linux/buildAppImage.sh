@@ -79,6 +79,9 @@ export TCL_LIBRARY="${APPDIR}/usr/share/tcltk/tcl8.5"
 export TK_LIBRARY="${APPDIR}/usr/share/tcltk/tk8.5"
 export TKPATH="${TK_LIBRARY}"
 
+# Export SSL certificates
+export SSL_CERT_FILE="${APPDIR}/opt/_internal/cert.pem"
+
 # Call the entry point
 for opt in "$@"
 do

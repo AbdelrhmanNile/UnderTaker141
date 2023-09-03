@@ -40,7 +40,7 @@ please read [johncena141's documents](https://github.com/jc141x/jc141-bash/tree/
 # Configuration
 after you run the appimage head to the settings tab and enter whats needed, then click on the "save settings" button, then restart the appimage
 
-get your qbittorent webui api key from qbittorent settings, and make sure you enable the webui
+get your qbittorent webui api credentials from qbittorent settings, and make sure you enable the webui
 
 get your twitch client id and secret from [here](https://dev.twitch.tv/console/apps/create)
 

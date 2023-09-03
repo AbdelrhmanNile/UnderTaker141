@@ -326,7 +326,7 @@ class JohnCena141Scraper:
         
     def parallelize_update_game_records(self, json_array):
         
-        num = 20
+        num = 10
         
         # split json array into 10 chunks
         chunks = np.array_split(json_array, num)

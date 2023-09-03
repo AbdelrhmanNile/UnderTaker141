@@ -7,7 +7,7 @@ from dataclasses import dataclass
 class Plugin(MDScreen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.md_bg_color="#90a4ae"
+        #self.md_bg_color="#90a4ae"
         self.radius = [18, 0, 0, 0]
         self.layout = None
         

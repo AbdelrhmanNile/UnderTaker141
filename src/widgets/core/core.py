@@ -6,6 +6,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.uix.screenmanager import MDScreenManager
 from kivy.uix.screenmanager import FadeTransition
 from kivymd.uix.navigationdrawer import MDNavigationLayout
+from kivymd.color_definitions import colors
 
 from widgets.navigation import Rail
 from .plugin import Plugin, PluginData
@@ -30,7 +31,7 @@ class MainScreen(MDScreen):
         self.scr1 = MDScreen()
         
         self.boxlayout1 = MDBoxLayout(orientation="vertical")
-        self.boxlayout2 = MDBoxLayout(adaptive_height=True, md_bg_color="#fffcf4", padding="12dp")
+        self.boxlayout2 = MDBoxLayout(adaptive_height=True, padding="12dp", md_bg_color=colors["BlueGray"]["700"])
         self.boxlayout2.add_widget(MDLabel(text="UnderTaker141", adaptive_height=True, pos_hint={"center_y": 0.5}))
         
         self.boxlayout3 = MDBoxLayout()

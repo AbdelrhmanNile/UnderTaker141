@@ -12,6 +12,3 @@ class Rail(MDNavigationRail):
         #self.add_widget(menu_button)
         
         self.id = "navigation_rail"
-        self.md_bg_color = "#fffcf4"
-        self.selected_color_background = "#e7e4c0"
-        self.ripple_color_item = "#e7e4c0"

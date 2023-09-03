@@ -2,7 +2,7 @@
 
 This project is for educational purposes only, do not use it against any law or to harm anyone, I will not be responsible for any misuse of this project.
 
-<img src="https://i.imgur.com/LoFkSpV.jpg">
+<img src="https://i.imgur.com/1tYoziW.jpg">
 
 <h1 align="center">UnderTaker141 (very creative name)</h1>
 

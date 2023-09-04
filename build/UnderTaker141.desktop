@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=UnderTaker141
+Exec=python3.11
+Comment=GameCenter for Linux
+Icon=python
+Categories=Game;
+Terminal=false

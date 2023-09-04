@@ -64,6 +64,18 @@ mv squashfs-root /tmp/kivy_appdir
 # add our code to the AppDir
 rsync -a src /tmp/kivy_appdir/opt/
 
+# rm the default icon
+rm /tmp/kivy_appdir/usr/share/icons/hicolor/256x256/apps/python.png
+# copy our icon to the AppDir
+rsync -a undertaker.png /tmp/kivy_appdir/usr/share/icons/hicolor/256x256/apps/python.png
+
+#delete the default desktop file
+rm /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
+# copy our desktop file to the AppDir
+rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
+
+
+
 # change AppRun so it executes our app
 mv /tmp/kivy_appdir/AppRun /tmp/kivy_appdir/AppRun.orig
 cat > /tmp/kivy_appdir/AppRun <<'EOF'

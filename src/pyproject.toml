@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "UnderTaker141"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["AbdelrhmanNile <abdelrhmannile@gmail.com>"]
 license = "mit"

@@ -28,13 +28,14 @@ jobs:
       uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
-        WITH_V: false
+        WITH_V: true
 
-    - name: automatic-draft-release
+    - name: automatic-release
       uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        title: "${{ steps.tag.outputs.tag }}: [UnderTaker141] by:${{ github.actor }}"
-        automatic_release_tag: ${{ steps.tag.outputs.new_tag }}
+        title: "${{ steps.tag.outputs.tag }}: UnderTaker141"
+        prerelease: false
+        automatic_release_tag: "latest"
         files: |
             dist/*.AppImage

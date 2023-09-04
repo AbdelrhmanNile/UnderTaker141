@@ -1,10 +1,6 @@
 from kivymd.app import MDApp
 from widgets.core import MainScreen
 
-gruv_box_colors = {
-    
-}
-
 
 class UnderTaker141(MDApp):
     def build(self):

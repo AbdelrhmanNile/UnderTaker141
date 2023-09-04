@@ -16,38 +16,24 @@ jobs:
     steps:
 
     - uses: actions/checkout@v2
+    with:
+        fetch-depth: '0'
 
     - name: Execute script to build linux AppImage
       run: "build/linux/buildAppImage.sh"
       shell: bash
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: UnderTaker141-linux-x86_64
-        path: dist/
-
-    - name: Create dist tarball
-      run: 'tar -cjvf UnderTaker141-linux-x86_64.${{ github.run_id }}.tar.bz2 dist/*'
-      shell: bash
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.64.0 # Don't use @master or @v1 unless you're happy to test the latest version
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.run_id }}_linux
-        release_name: 'Public Build Artifact: Linux ${{ github.run_id }}'
-        draft: false
-        prerelease: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: automatic-draft-release
+      uses: marvinpinto/action-automatic-releases@latest
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: UnderTaker141-linux-x86_64.${{ github.run_id }}.tar.bz2
-        asset_name: UnderTaker141-linux-x86_64.${{ github.run_id }}.tar.bz2
-        asset_content_type: application/x-bzip2
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        title: "${{ steps.tag.outputs.tag }}: [UnderTaker141] by:${{ github.actor }}"
+        automatic_release_tag: ${{ steps.tag.outputs.new_tag }}
+        files: |
+            dist/*.AppImage

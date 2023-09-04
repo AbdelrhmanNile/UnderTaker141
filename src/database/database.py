@@ -57,8 +57,7 @@ class Database:
     def __init__(self, db_file):
         self.db_file = db_file
         
-        abs_path = os.path.dirname(__file__)
-        db_file_path = os.path.join(abs_path, db_file)
+        db_file_path = f"/home/{os.getlogin()}/.config/undertaker141/{db_file}"
         
         self.engine = create_engine(f'sqlite:///{db_file_path}', echo=False)
         self.session = sessionmaker(bind=self.engine)()

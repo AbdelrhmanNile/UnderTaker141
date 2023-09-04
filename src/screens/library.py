@@ -26,16 +26,14 @@ class Library(Plugin):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.id = "library"
-        # main layout
-        self.layout = MDBoxLayout(orientation="vertical", padding="50dp", id="lib_layout")
-        self.add_widget(self.layout)
         
-        # Games list
+        self.layout = MDGridLayout(cols=3, padding="12dp", spacing="50dp", adaptive_height=True, adaptive_width=True)
+        
         self.scroll = ScrollView()
-        self.list = MDList(padding="12dp", spacing="12dp", id="lib_list")
                 
-        self.scroll.add_widget(self.list)
-        self.layout.add_widget(self.scroll)
+        self.scroll.add_widget(self.layout)
+        
+        self.add_widget(self.scroll)
         
         
         self.load_library()
@@ -45,7 +43,7 @@ class Library(Plugin):
     def load_library(self):
         torrs = qbt.get_torrents()
         for game in torrs:
-            self.list.add_widget(GameLibraryItem(game_torrent=game))
+            self.layout.add_widget(GameLibraryItem(game_torrent=game))            
             
     def update_library(self):
         self.list.clear_widgets()

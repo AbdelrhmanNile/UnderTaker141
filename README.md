@@ -48,6 +48,7 @@ get your twitch client id and secret from [here](https://dev.twitch.tv/console/a
 to update the database and fetch new releases by jc141 head to the settings tab and click on the "update database" button, this will take a few minutes and will freeze the app, just wait until it finishes.
 
 # TODO
-- [ ] better design for the Library tab
+- [X] better design for the Library tab
 - [ ] add a search bar to the Library tab
+- [ ] fix deleting games from the library
 

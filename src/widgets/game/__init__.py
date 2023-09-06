@@ -1,1 +1,1 @@
-from .game import GameCard, GameLibraryItem
+from .game import GameCard, GameLibraryCard

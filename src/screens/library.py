@@ -1,8 +1,8 @@
 from widgets.core import Plugin
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.gridlayout import MDGridLayout
-from widgets.game import GameLibraryItem
-from kivy.uix.scrollview import ScrollView
+from widgets.game import GameLibraryCard
+from kivymd.uix.recycleview import MDRecycleView
 from kivymd.uix.list import MDList
 from kivymd.uix.label import MDLabel
 from kivy.clock import Clock
@@ -27,9 +27,9 @@ class Library(Plugin):
         super().__init__(**kwargs)
         self.id = "library"
         
-        self.layout = MDGridLayout(cols=3, padding="12dp", spacing="50dp", adaptive_height=True, adaptive_width=True)
+        self.layout = MDGridLayout(cols=8, padding="12dp", spacing="30dp", adaptive_height=True, adaptive_width=True)
         
-        self.scroll = ScrollView()
+        self.scroll = MDRecycleView()
                 
         self.scroll.add_widget(self.layout)
         
@@ -43,7 +43,7 @@ class Library(Plugin):
     def load_library(self):
         torrs = qbt.get_torrents()
         for game in torrs:
-            self.layout.add_widget(GameLibraryItem(game_torrent=game))            
+            self.layout.add_widget(GameLibraryCard(game_torrent=game))            
             
     def update_library(self):
         self.list.clear_widgets()

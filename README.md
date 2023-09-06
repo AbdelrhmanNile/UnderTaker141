@@ -2,7 +2,7 @@
 
 This project is for educational purposes only, do not use it against any law or to harm anyone, I will not be responsible for any misuse of this project.
 
-<img src="https://i.imgur.com/1tYoziW.jpg">
+<img src="https://i.imgur.com/mGkRVa2.jpg">
 
 <h1 align="center">UnderTaker141 (very creative name)</h1>
 
@@ -23,7 +23,7 @@ please read [johncena141's documents](https://github.com/jc141x/jc141-bash/tree/
 - uses qbittorent webui api
     - better contorl over downloads
 - local database for games
-    - sqlite database with 2 tables, one for games (to be displayed on ui) and one as an archive for games cover art and summary (no need to        re-fetch them all over again from igdb every time) you update the database
+    - sqlite database with 2 tables, one for games (to be displayed on ui) and one as an archive for games cover art and summary (no need to        re-fetch them all over again from igdb every time) when you update the database
 - packaged as an AppImage
 
 # Dependencies

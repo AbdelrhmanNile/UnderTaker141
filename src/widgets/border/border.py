@@ -103,7 +103,6 @@ class BorderBehavior(Widget):
         self.border_origin_y = self.pos[1] + self.line_width
 
     def on_border_origin(self, instance, value):
-        print (self.border_origin, "border origin")
         self.update_borders()
 
     def on_size(self, instance, value):

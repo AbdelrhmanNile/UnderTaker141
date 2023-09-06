@@ -55,7 +55,7 @@ class Main(Plugin):
         text = instance.text
         instance.text = ""
         
-        if text == "" or " ": # if entred text is empty, randomize grid
+        if text == "": # if entred text is empty, randomize grid
             self.randomize()
             return
         

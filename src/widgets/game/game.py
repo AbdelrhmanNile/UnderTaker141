@@ -81,7 +81,7 @@ class GameLibraryCard(MDCard, BorderBehavior):
         self.borders = (1, 'solid', get_color_from_hex(colors["BlueGray"]["600"]))
         
         self.game_name = str(game_torrent.name).split("-")[0]
-        self.game_obj = db.get_game(self.game_name)[0]
+        self.game_obj = self.query_game(self.game_name)
         
         self.torr = None
         self.magnet = self.game_obj.magnet
@@ -151,3 +151,14 @@ class GameLibraryCard(MDCard, BorderBehavior):
         
     def dismiss_dialog(self):
         self.manage_dialog.dismiss()
+        
+    def query_game(self, name):
+        query_result = db.get_game(name)
+        if len(query_result) == 1:
+            return query_result[0]
+        
+        for q in query_result:
+            if q.name.strip() == name.strip():
+                return q
+            
+        return query_result[-1]

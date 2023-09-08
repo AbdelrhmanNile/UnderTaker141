@@ -1,6 +1,7 @@
 import qbittorrentapi
 import os
 import re
+import time
 
 class JCQbt:
     """
@@ -47,17 +48,3 @@ class JCQbt:
     # get torrent with hash
     def get_torrent(self, url):
         return self.qbt_client.torrents_info(torrent_hashes=self.get_hash(url))[0]
-    
-    def __del__(self):
-        self.qbt_client.auth_log_out()
-        
-        
-if __name__ == "__main__":
-    
-    
-    qbt = JCQbt(host="localhost",
-                port="8080",
-                username="admin",
-                password="adminadmin")
-    
-    print(qbt.get_torrents()[0])

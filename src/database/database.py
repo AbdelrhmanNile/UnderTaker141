@@ -87,7 +87,7 @@ class Database:
         return self.session.query(Game).filter(Game.magnet == magnet).first()
     
     def get_specific_game(self, name):
-        return self.session.query(Game).filter(Game.name.ilike(f'%{name}%')).first()
+        return self.session.query(Game).filter(Game.name == name).first()
     
     # get n random games from the database
     def get_randn_games(self, n):
@@ -133,15 +133,3 @@ class Database:
     def delete_all(self):
         self.session.query(Game).delete()
         self.session.commit()
-        
-    #def _get_game_info_from_igdb(self, game_name):
-        
-        
-
-        
-
-if __name__ == '__main__':
-    db = Database("games.db")
-    
-    g = db._get_game_info("baba")
-    print(g.cover)

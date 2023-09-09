@@ -25,15 +25,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
         WITH_V: true
+    
+    - name: Set version in __version__.py
+      run: "sed -i 's/version_here/${{ steps.tag.outputs.tag }}/g' src/__version__.py"
+      shell: bash
 
     - name: Execute script to build linux AppImage
       run: "build/linux/buildAppImage.sh"
       shell: bash
 
-    - name: Set version in __version__.py
-      run: "sed -i 's/version_here/${{ steps.tag.outputs.tag }}/g' src/__version__.py"
-      shell: bash
-
+    
     - name: automatic-release
       uses: marvinpinto/action-automatic-releases@latest
       with:

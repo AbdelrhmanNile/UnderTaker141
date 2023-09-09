@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from widgets.core import MainScreen
 from utils import check_config, check_database
-
+from __version__ import __version__
 
 class UnderTaker141(MDApp):
     def build(self):
@@ -13,7 +13,7 @@ class UnderTaker141(MDApp):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "BlueGray"
 
-        return MainScreen()
+        return MainScreen(__version__)
 
 
 UnderTaker141().run()

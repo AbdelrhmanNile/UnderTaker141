@@ -2,6 +2,7 @@ import qbittorrentapi
 import os
 import re
 import time
+from kivy.clock import Clock
 
 class JCQbt:
     """
@@ -11,15 +12,37 @@ class JCQbt:
         
         os.system("qbittorrent &")
         
-        # connect to the client
-        self.qbt_client = qbittorrentapi.Client(
-            host=host,
-            port=port,
-            username=username,
-            password=password,
-        )
-            
+        self.host = host
+        self.port = port
+        self.username = username
+        self.password = password
+        
+        self.connected = False
+        
+        self.qbt_client = None
+          
         self.save_path = save_path
+        
+        self.init_client()
+        self.connection_check = Clock.schedule_interval(self.check_connection, 1)
+        
+    
+    def init_client(self):
+        if self.qbt_client is not None:
+            self.qbt_client.log_out()
+            
+        
+        self.qbt_client = qbittorrentapi.Client(host=self.host, port=self.port, username=self.username, password=self.password)
+        self.check_connection()
+            
+    
+    def check_connection(self, dt=None):
+        try:
+            self.qbt_client.auth_log_in()
+            self.connected = True
+        except Exception as e:
+            print("\n--# Please make sure qBittorrent is running and the settings are correct. #--\n")
+            self.connected = False
             
     # get all torrents with the tag "jc141"
     def get_torrents(self):
@@ -48,3 +71,6 @@ class JCQbt:
     # get torrent with hash
     def get_torrent(self, url):
         return self.qbt_client.torrents_info(torrent_hashes=self.get_hash(url))[0]
+
+    def is_connected(self):
+        return self.connected

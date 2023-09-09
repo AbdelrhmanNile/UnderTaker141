@@ -18,10 +18,11 @@ db = Database("games.db")
 class Main(Plugin):
     name = "Main"
     icon = "controller"
-    def __init__(self, **kwargs):
+    def __init__(self, qbt_client, **kwargs):
         super().__init__(**kwargs)
         self.id = "main"
-        #self.scr_mngr = scr_mngr
+        
+        self.qbt_client = qbt_client
         
         # main layout
         self.layout = MDBoxLayout(orientation="vertical")
@@ -48,7 +49,7 @@ class Main(Plugin):
     def randomize(self):
         self.grid.clear_widgets()
         for i in db.get_randn_games(48):
-            self.grid.add_widget(GameCard(i))
+            self.grid.add_widget(GameCard(i, self.qbt_client))
                  
     # callback for searchbar   
     def update_grid_on_search(self, instance):
@@ -64,6 +65,6 @@ class Main(Plugin):
         
         # fill grid with search results
         for i in db.get_game(text):
-            self.grid.add_widget(GameCard(i))
+            self.grid.add_widget(GameCard(i, self.qbt_client))
 
         

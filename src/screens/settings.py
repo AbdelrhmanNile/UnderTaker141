@@ -13,7 +13,7 @@ class Settings(Plugin):
     name = "Settings"
     icon = "cog"
     
-    def __init__(self, scr_mngr=None,**kwargs):
+    def __init__(self, qbt_client=None,**kwargs):
         super().__init__(**kwargs)
         self.settings_yaml = get_settings()
         

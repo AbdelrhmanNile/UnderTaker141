@@ -20,21 +20,17 @@ from widgets.border import BorderBehavior
 db = Database("games.db")
 
 settings = get_settings()
-qbt = JCQbt(host=settings["qbittorrent_api"]["host"], 
-            port=settings["qbittorrent_api"]["port"], 
-            username=settings["qbittorrent_api"]["username"], 
-            password=settings["qbittorrent_api"]["password"],
-            save_path=settings["general"]["save_path"])
+
 
 class GameCard(MDCard, BorderBehavior):
-    def __init__(self, game_obj, **kwargs):
+    def __init__(self, game_obj, qbt_client, **kwargs):
         super().__init__(**kwargs)
         
         self.borders = (1, 'solid', get_color_from_hex(colors["BlueGray"]["600"]))
         
         self.game_obj = game_obj
         
-        #self.scr_mngr = scr_mngr
+        self.qbt_client = qbt_client
         self.orientation = "vertical"
         self.size_hint = (None, None)
         self.size = (200, 300)
@@ -54,10 +50,12 @@ class GameCard(MDCard, BorderBehavior):
                 f"Size: {self.game_obj.size}\n\n" \
                 f"Platform: {self.game_obj.platform}\n\n"
         
+        qbt_connected = self.qbt_client.is_connected()
+        
         dia = MDDialog(title=self.game_obj.name, 
                        text=text,
                        buttons=[
-                           MDRectangleFlatButton(text="Download", on_press=self.download)
+                           MDRectangleFlatButton(text="Download" if qbt_connected else "Please connect to Qbittorrent to download", on_press=self.download, disabled=not qbt_connected),
                         ],
                        )
         
@@ -65,20 +63,23 @@ class GameCard(MDCard, BorderBehavior):
         
         
     def download(self, instance: MDRectangleFlatButton):
-        qbt.download(self.magnet)
+        self.qbt_client.download(self.magnet)
         instance.text = "Downloading..."
         instance.disabled = True
         
         library = self.parent.parent.parent.parent.parent.get_screen("Library")
-        library.layout.add_widget(GameLibraryCard(game_torrent=qbt.get_torrent(self.magnet)))
+        print(library)
+        library.layout.add_widget(GameLibraryCard(game_torrent=self.qbt_client.get_torrent(self.magnet), qbt_client=self.qbt_client))
         
 
 
 class GameLibraryCard(MDCard, BorderBehavior):
-    def __init__(self, game_torrent, **kwargs):
+    def __init__(self, game_torrent, qbt_client, **kwargs):
         super().__init__(**kwargs)
         
         self.borders = (1, 'solid', get_color_from_hex(colors["BlueGray"]["600"]))
+        
+        self.qbt_client = qbt_client
         
         self.game_name = str(game_torrent.name).split("-")[0]
         self.game_obj = self.query_game(self.game_name)
@@ -109,8 +110,8 @@ class GameLibraryCard(MDCard, BorderBehavior):
                             text=" ",
                             buttons=[
                                 MDRectangleFlatButton(text="Open Location", on_press=self.open_location),
-                                MDRectangleFlatButton(text="Pause", on_press=lambda x: qbt.pause(self.magnet)),
-                                MDRectangleFlatButton(text="Resume", on_press=lambda x: qbt.resume(self.magnet)),
+                                MDRectangleFlatButton(text="Pause", on_press=lambda x: self.qbt_client.pause(self.magnet)),
+                                MDRectangleFlatButton(text="Resume", on_press=lambda x: self.qbt_client.resume(self.magnet)),
                                 MDRectangleFlatButton(text="Close", on_press=lambda x: self.dismiss_dialog())
                                 ])
         
@@ -127,7 +128,13 @@ class GameLibraryCard(MDCard, BorderBehavior):
         
     def update_status(self, dt=None):
             
-            self.torr = qbt.get_torrent(self.magnet)
+            if not self.qbt_client.is_connected():
+                text = "qBittorrent not connected"
+                self.manage_dialog.text = text
+                return
+            
+            
+            self.torr = self.qbt_client.get_torrent(self.magnet)
             
             text = f"State: {self.torr.state}\n" \
                     f"Download Progress: {self.torr.progress*100:.2f}%\n" \

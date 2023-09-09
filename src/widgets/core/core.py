@@ -8,16 +8,27 @@ from kivy.uix.screenmanager import FadeTransition
 from kivymd.uix.navigationdrawer import MDNavigationLayout
 from kivymd.color_definitions import colors
 
+from kivy.clock import Clock
 from widgets.navigation import Rail
+from utils import JCQbt, get_settings
 from .plugin import Plugin, PluginData
 
 from importlib import import_module
 import yaml
 import os
 
+settings = get_settings()
 class MainScreen(MDScreen):
     def __init__(self, version, **kwargs):
         super().__init__(**kwargs)
+        
+        
+        self.qbt_client = JCQbt(settings["qbittorrent_api"]["host"],
+                                settings["qbittorrent_api"]["port"],
+                                settings["qbittorrent_api"]["username"],
+                                settings["qbittorrent_api"]["password"],
+                                settings["general"]["save_path"])
+                                
         
         self.plugins = self.load_plugins()
         
@@ -30,11 +41,17 @@ class MainScreen(MDScreen):
         # scr 1
         self.scr1 = MDScreen()
         
-        self.boxlayout1 = MDBoxLayout(orientation="vertical")
-        self.boxlayout2 = MDBoxLayout(adaptive_height=True, padding="12dp", md_bg_color=colors["BlueGray"]["700"])
-        self.boxlayout2.add_widget(MDLabel(text=f"UnderTaker141 | {version}", adaptive_height=True, pos_hint={"center_y": 0.5}))
+        self.boxlayout1 = MDBoxLayout(orientation="vertical", id="core_boxlayout")
         
-        self.boxlayout3 = MDBoxLayout()
+        self.boxlayout2 = MDBoxLayout(adaptive_height=True, padding="12dp", md_bg_color=colors["BlueGray"]["700"], id="header_boxlayout")
+        self.title_version = MDLabel(text=f"UnderTaker141 {version}", adaptive_height=True, pos_hint={"center_y": 0.5}, id="title_label")
+        self.boxlayout2.add_widget(self.title_version)
+        
+        self.qbittorrent_status = MDLabel(text="Qbt not connected", adaptive_height=True, pos_hint={"right": 1}, id="qbittorrent_status_label", size_hint_x=0.2)
+        self.boxlayout2.add_widget(self.qbittorrent_status)
+        
+        
+        self.boxlayout3 = MDBoxLayout(id="rail_boxlayout")
         self.rail = Rail()
         self.load_nav_list()
         
@@ -54,6 +71,9 @@ class MainScreen(MDScreen):
         self.nav_layout.add_widget(self.scr_mngr)
         
         self.add_widget(self.nav_layout)
+        
+        self.qbt_checker = Clock.schedule_interval(self.update_qbt_status, 1)
+        
         
     def load_plugins(self) -> dict: # load plugins from plugins.yaml
         abs_path = os.path.dirname(__file__)
@@ -99,5 +119,18 @@ class MainScreen(MDScreen):
     def load_screens(self): # load all the screens and add them to the screen manager
         for plugin in self.plugins:
             screen_class = plugin.class_
-            screen = screen_class(name=plugin.name) # create instance of a screen class
+            screen = screen_class(name=plugin.name, qbt_client=self.qbt_client) # create instance of a screen class
             self.screen_manager_content.add_widget(screen) # add the screen to the screen manager
+            
+
+    
+    def update_qbt_status(self, dt=None):
+        
+        connected = self.qbt_client.is_connected()
+        if connected:
+            self.qbittorrent_status.text = "Qbittorrent connected"
+            self.qbittorrent_status.md_bg_color = colors["Green"]["700"]
+        else:
+            self.qbittorrent_status.text = "Qbt not connected"
+            self.qbittorrent_status.md_bg_color = colors["Red"]["700"]
+            

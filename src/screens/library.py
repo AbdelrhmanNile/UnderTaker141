@@ -34,7 +34,9 @@ class Library(Plugin):
         
         self.add_widget(self.scroll)
         
-        self.load_library()    
+        self.load_library()
+        
+        count_check = Clock.schedule_interval(self.check_counts, 1)
             
             
     def load_library(self):
@@ -50,3 +52,14 @@ class Library(Plugin):
             return
         self.layout.clear_widgets()
         self.load_library()
+        
+    def library_count(self):
+        return len(self.layout.children)
+    
+    def check_counts(self, dt=None):
+        try:
+            torrents_count = self.qbt_client.count()
+        except Exception as e:
+            return
+        if self.library_count() > torrents_count:
+            self.update_library()

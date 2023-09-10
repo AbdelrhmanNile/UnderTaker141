@@ -13,23 +13,13 @@ just download the game and run it! everything is pre-configuired for you thank's
 
 # IMPORTANT
 
-please read [johncena141's documents](https://github.com/jc141x/jc141-bash/tree/master/setup) to understand more about how their repacks work, and double check the dependencies for their repacks
+please read [johncena141's guide](https://github.com/jc141x/jc141-bash/tree/master/setup) to understand more about how their repacks work, and double check the dependencies for their repacks
 
-# Improvements over steaL
-- Better UI
-    - uses kivymd instead of plain kivy
-- Better code (I think)
-    - not the cleanest code but structured better than steaL
-- uses qbittorent webui api
-    - better contorl over downloads
-- local database for games
-    - sqlite database with 2 tables, one for games (to be displayed on ui) and one as an archive for games cover art and summary (no need to        re-fetch them all over again from igdb every time) when you update the database
-- packaged as an AppImage
 
 # Dependencies
 - appimage launcher
 - latest qbitorent with webui enabled
-- all the dependencies for johncena141's repacks (check their [documents](https://github.com/jc141x/jc141-bash/blob/master/setup/en/readme.md)
+- all the dependencies for johncena141's repacks (check their [guide](https://github.com/jc141x/jc141-bash/blob/master/setup/en/readme.md)
 
 # Installation
 - download the latest release from [here](https://github.com/AbdelrhmanNile/UnderTaker141/releases)
@@ -48,7 +38,7 @@ after you run the appimage head to the settings tab.
 - create a twitch api app and get a client id and from [here](https://dev.twitch.tv/console/apps/create)
 
 # Updating the database
-to update the database and fetch new releases by jc141 head to the settings tab and click on the "update database" button, this will take a few minutes and will freeze the app, just wait until it finishes.
+to update the database and fetch new releases by jc141 head to the settings tab and click on the "update database" button, this will take a few minutes and will freeze the app (and might freeze your system), just wait until it finishes and everything will return to normal.
 
 # TODO
 - [X] better design for the Library tab

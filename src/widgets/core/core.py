@@ -21,6 +21,7 @@ settings = get_settings()
 class MainScreen(MDScreen):
     def __init__(self, version, **kwargs):
         super().__init__(**kwargs)
+        self.version = version
         
         
         self.qbt_client = JCQbt(settings["qbittorrent_api"]["host"],
@@ -46,9 +47,6 @@ class MainScreen(MDScreen):
         self.boxlayout2 = MDBoxLayout(adaptive_height=True, padding="12dp", md_bg_color=colors["BlueGray"]["700"], id="header_boxlayout")
         self.title_version = MDLabel(text=f"UnderTaker141 {version}", adaptive_height=True, pos_hint={"center_y": 0.5}, id="title_label")
         self.boxlayout2.add_widget(self.title_version)
-        
-        self.qbittorrent_status = MDLabel(text="Qbt not connected", adaptive_height=True, pos_hint={"right": 1}, id="qbittorrent_status_label", size_hint_x=0.2)
-        self.boxlayout2.add_widget(self.qbittorrent_status)
         
         
         self.boxlayout3 = MDBoxLayout(id="rail_boxlayout")
@@ -128,9 +126,9 @@ class MainScreen(MDScreen):
         
         connected = self.qbt_client.is_connected()
         if connected:
-            self.qbittorrent_status.text = "Qbittorrent connected"
-            self.qbittorrent_status.md_bg_color = colors["Green"]["700"]
+            self.title_version.text = f"UnderTaker141 {self.version}"
+            self.boxlayout2.md_bg_color = colors["BlueGray"]["700"]
         else:
-            self.qbittorrent_status.text = "Qbt not connected"
-            self.qbittorrent_status.md_bg_color = colors["Red"]["700"]
+            self.title_version.text = "Qbittorrent not connected"
+            self.boxlayout2.md_bg_color = colors["Red"]["700"]
             

@@ -74,3 +74,6 @@ class JCQbt:
 
     def is_connected(self):
         return self.connected
+    
+    def count(self):
+        return len(self.get_torrents())

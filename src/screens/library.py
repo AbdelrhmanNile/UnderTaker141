@@ -11,15 +11,10 @@ from utils import JCQbt
 from utils import get_settings
 
 from database import Database
+import time
 
 db = Database("games.db")
 
-settings = get_settings()
-qbt = JCQbt(host=settings["qbittorrent_api"]["host"],
-            port=settings["qbittorrent_api"]["port"],
-            username=settings["qbittorrent_api"]["username"],
-            password=settings["qbittorrent_api"]["password"],
-            save_path=settings["general"]["save_path"])
 
 class Library(Plugin):
     name = "Library"
@@ -29,6 +24,7 @@ class Library(Plugin):
         self.id = "library"
         
         self.qbt_client = qbt_client
+        self.qbt_client.check_connection()
         
         self.layout = MDGridLayout(cols=8, padding="12dp", spacing="30dp", adaptive_height=True, adaptive_width=True)
         
@@ -38,15 +34,12 @@ class Library(Plugin):
         
         self.add_widget(self.scroll)
         
-        if self.qbt_client.is_connected():
-            self.load_library()
-        else:
-            self.layout.add_widget(MDRectangleFlatButton(text="Please connect to Qbittorrent to view your library", on_press=self.update_library, size_hint=(None, None), size=(500, 100), pos_hint={"center_x": 0.5, "center_y": 0.5}))
-                
+        self.load_library()    
             
             
     def load_library(self):
         if not self.qbt_client.is_connected():
+            self.layout.add_widget(MDRectangleFlatButton(text="Please connect to Qbittorrent to view your library", on_press=self.update_library, size_hint=(None, None), size=(500, 100), pos_hint={"center_x": 0.5, "center_y": 0.5}))
             return
         torrs = self.qbt_client.get_torrents()
         for game in torrs:

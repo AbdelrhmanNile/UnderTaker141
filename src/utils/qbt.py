@@ -21,9 +21,9 @@ class JCQbt:
         
         self.qbt_client = None
           
+        self.init_client()
         self.save_path = save_path
         
-        self.init_client()
         self.connection_check = Clock.schedule_interval(self.check_connection, 1)
         
     

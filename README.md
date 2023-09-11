@@ -13,8 +13,9 @@ just download the game and run it! everything is pre-configuired for you thank's
 
 # IMPORTANT
 
-please read [johncena141's guide](https://github.com/jc141x/jc141-bash/tree/master/setup) to understand more about how their repacks work, and double check the dependencies for their repacks
+- please read [johncena141's guide](https://github.com/jc141x/jc141-bash/tree/master/setup) to understand more about how their repacks work, and double check the dependencies for their repacks
 
+- if you are using a VPN, do not forget to set the network interface in qbittorent to your VPN interface.
 
 # Dependencies
 - appimage launcher
@@ -39,9 +40,3 @@ after you run the appimage head to the settings tab.
 
 # Updating the database
 to update the database and fetch new releases by jc141 head to the settings tab and click on the "update database" button, this will take a few minutes and will freeze the app (and might freeze your system), just wait until it finishes and everything will return to normal.
-
-# TODO
-- [X] better design for the Library tab
-- [ ] add a search bar to the Library tab
-- [ ] fix deleting games from the library
-

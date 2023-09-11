@@ -2,7 +2,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.card import MDCard
 from kivy.uix.image import AsyncImage
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDRectangleFlatButton, MDIconButton
+from kivymd.uix.button import MDIconButton, MDRaisedButton
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import MDList, ImageLeftWidgetWithoutTouch, IconRightWidget, OneLineAvatarIconListItem
 from kivymd.color_definitions import colors
@@ -55,14 +55,14 @@ class GameCard(MDCard, BorderBehavior):
         dia = MDDialog(title=self.game_obj.name, 
                        text=text,
                        buttons=[
-                           MDRectangleFlatButton(text="Download" if qbt_connected else "Please connect to Qbittorrent to download", on_press=self.download, disabled=not qbt_connected),
+                           MDRaisedButton(text="Download" if qbt_connected else "Please connect to Qbittorrent to download", on_press=self.download, disabled=not qbt_connected),
                         ],
                        )
         
         dia.open()
         
         
-    def download(self, instance: MDRectangleFlatButton):
+    def download(self, instance):
         self.qbt_client.download(self.magnet)
         instance.text = "Downloading..."
         instance.disabled = True
@@ -109,10 +109,11 @@ class GameLibraryCard(MDCard, BorderBehavior):
         self.manage_dialog = MDDialog(title=self.game_obj.name,
                             text=" ",
                             buttons=[
-                                MDRectangleFlatButton(text="Open Location", on_press=self.open_location),
-                                MDRectangleFlatButton(text="Pause", on_press=lambda x: self.qbt_client.pause(self.magnet)),
-                                MDRectangleFlatButton(text="Resume", on_press=lambda x: self.qbt_client.resume(self.magnet)),
-                                MDRectangleFlatButton(text="Close", on_press=lambda x: self.dismiss_dialog())
+                                MDRaisedButton(text="Open Location", on_press=self.open_location),
+                                MDRaisedButton(text="Pause", on_press=lambda x: self.qbt_client.pause(self.magnet)),
+                                MDRaisedButton(text="Resume", on_press=lambda x: self.qbt_client.resume(self.magnet)),
+                                MDRaisedButton(text="Delete", on_press=lambda x: self.delete(self.magnet), md_bg_color=colors["Red"]["500"]),
+                                MDRaisedButton(text="Close", on_press=lambda x: self.dismiss_dialog())
                                 ])
         
         self.manage_btn = MDIconButton(icon="file-cog", on_press=lambda x: self.manage_dialog.open())
@@ -172,3 +173,9 @@ class GameLibraryCard(MDCard, BorderBehavior):
                 return q
             
         return query_result[-1]
+    
+    def delete(self, magnet):
+        self.clock.cancel()
+        self.qbt_client.delete(magnet, delete_files=True)
+        self.manage_dialog.dismiss()
+        self.parent.remove_widget(self)

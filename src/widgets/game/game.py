@@ -68,7 +68,6 @@ class GameCard(MDCard, BorderBehavior):
         instance.disabled = True
         
         library = self.parent.parent.parent.parent.parent.get_screen("Library")
-        print(library)
         library.layout.add_widget(GameLibraryCard(game_torrent=self.qbt_client.get_torrent(self.magnet), qbt_client=self.qbt_client))
         
 

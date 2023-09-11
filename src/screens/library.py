@@ -36,7 +36,7 @@ class Library(Plugin):
         
         self.load_library()
         
-        self.count_check = Clock.schedule_interval(self.check_counts, 1)
+        self.count_check = Clock.schedule_interval(self.check_counts, 5)
             
             
     def load_library(self):

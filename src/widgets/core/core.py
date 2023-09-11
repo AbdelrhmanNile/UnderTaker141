@@ -70,7 +70,7 @@ class MainScreen(MDScreen):
         
         self.add_widget(self.nav_layout)
         
-        self.qbt_checker = Clock.schedule_interval(self.update_qbt_status, 1)
+        self.qbt_checker = Clock.schedule_interval(self.update_qbt_status, 5)
         
         
     def load_plugins(self) -> dict: # load plugins from plugins.yaml

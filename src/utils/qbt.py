@@ -24,7 +24,7 @@ class JCQbt:
         self.init_client()
         self.save_path = save_path
         
-        self.connection_check = Clock.schedule_interval(self.check_connection, 1)
+        self.connection_check = Clock.schedule_interval(self.check_connection, 10)
         
     
     def init_client(self):

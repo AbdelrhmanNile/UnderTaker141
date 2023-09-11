@@ -31,6 +31,12 @@ def check_config():
         os.makedirs(config_path)
         settings = get_settings_template()
         write_settings(settings)
+    
+    # Check if settings file exists
+    settings_path = os.path.join(config_path, "settings.yaml")
+    if not os.path.isfile(settings_path):
+        settings = get_settings_template()
+        write_settings(settings)
         
 def get_settings():
     user_name = os.getlogin()

@@ -17,13 +17,13 @@ from importlib import import_module
 import yaml
 import os
 
-settings = get_settings()
 class MainScreen(MDScreen):
     def __init__(self, version, **kwargs):
         super().__init__(**kwargs)
         self.version = version
         
         
+        settings = get_settings()
         self.qbt_client = JCQbt(settings["qbittorrent_api"]["host"],
                                 settings["qbittorrent_api"]["port"],
                                 settings["qbittorrent_api"]["username"],

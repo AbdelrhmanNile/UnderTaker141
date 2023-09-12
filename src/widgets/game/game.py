@@ -131,6 +131,12 @@ class GameLibraryCard(MDCard, BorderBehavior):
             if not self.qbt_client.is_connected():
                 text = "qBittorrent not connected, please connect ..."
                 self.manage_dialog.text = text
+                
+                # disable buttons
+                for i, btn in enumerate(self.manage_dialog.buttons):
+                    if i == 0 or i == 4:
+                        continue
+                    btn.disabled = True
                 return
             
             try:

@@ -1,6 +1,3 @@
-import os
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
-
 from kivymd.app import MDApp
 from widgets.core import MainScreen
 from utils import check_config, check_database

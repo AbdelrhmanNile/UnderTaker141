@@ -44,19 +44,30 @@ class JCQbt:
             print("\n--# Please make sure qBittorrent is running and the settings are correct. #--\n")
             self.connected = False
             
+    def connection_decorator(func):
+        def wrapper(self, *args, **kwargs):
+            if not self.connected:
+                return
+            return func(self, *args, **kwargs)
+        return wrapper
+            
     # get all torrents with the tag "jc141"
+    @connection_decorator
     def get_torrents(self):
         return self.qbt_client.torrents_info(tag="jc141")
     
     # pause torrent
+    @connection_decorator
     def pause(self, url):
         return self.qbt_client.torrents_pause(torrent_hashes=self.get_hash(url))
     
     # resume torrent
+    @connection_decorator
     def resume(self, url):
         return self.qbt_client.torrents_resume(torrent_hashes=self.get_hash(url))
     
     # delete torrent
+    @connection_decorator
     def delete(self, url, delete_files=False):
         return self.qbt_client.torrents_delete(torrent_hashes=self.get_hash(url), delete_files=delete_files)
 
@@ -69,6 +80,7 @@ class JCQbt:
         return re.findall(r"magnet:\?xt=urn:btih:([a-zA-Z0-9]+)", url)[0]
     
     # get torrent with hash
+    @connection_decorator
     def get_torrent(self, url):
         return self.qbt_client.torrents_info(torrent_hashes=self.get_hash(url))[0]
 

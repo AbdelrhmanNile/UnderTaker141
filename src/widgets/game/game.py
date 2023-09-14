@@ -177,7 +177,10 @@ class GameLibraryCard(MDCard, BorderBehavior):
             if q.name.strip() == name.strip():
                 return q
             
-        return query_result[-1]
+        partial_name = name.split(" ")
+        partial_name = partial_name[:len(partial_name)//2]
+        partial_name = " ".join(partial_name)
+        return db.get_game(partial_name)[0]
     
     def delete(self, magnet):
         self.clock.cancel()

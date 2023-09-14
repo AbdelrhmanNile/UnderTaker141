@@ -6,7 +6,7 @@ from kivymd.uix.button import MDIconButton, MDRaisedButton
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import MDList, ImageLeftWidgetWithoutTouch, IconRightWidget, OneLineAvatarIconListItem
 from kivymd.color_definitions import colors
-
+from kivymd.toast.kivytoast.kivytoast import toast
 
 from kivy.clock import Clock
 from kivy.utils import get_color_from_hex
@@ -65,6 +65,7 @@ class GameCard(MDCard, BorderBehavior):
     def download(self, instance):
         self.qbt_client.download(self.magnet)
         instance.text = "Downloading..."
+        toast(f"Downloading {self.game_obj.name} ...", duration=3.0)
         instance.disabled = True
         
         library = self.parent.parent.parent.parent.parent.get_screen("Library")

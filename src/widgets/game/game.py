@@ -48,7 +48,7 @@ class GameCard(MDCard, BorderBehavior):
         
         text = f"Description: \n{self.game_obj.description}\n\n" \
                 f"Size: {self.game_obj.size}\n\n" \
-                f"Platform: {self.game_obj.platform}\n\n"
+                f"Platform: {self.game_obj.platform.title()}\n\n"
         
         qbt_connected = self.qbt_client.is_connected()
         
@@ -146,10 +146,14 @@ class GameLibraryCard(MDCard, BorderBehavior):
                 self.manage_dialog.text = "qBittorrent not connected, please connect ..."
                 return
             
+            progress = f"{self.torr.progress*100:.1f}%"
+            speed = f"{self.torr.dlspeed//1000} KB/s"
+            eta = self.torr.eta//60
+            eta = f"{eta} min" if eta != 144000 else "∞"
             text = f"State: {self.torr.state}\n" \
-                    f"Download Progress: {self.torr.progress*100:.2f}%\n" \
-                    f"Download Speed: {int(int(self.torr.dlspeed)/1000)} kB/s\n" \
-                    f"ETA: {int(int(self.torr.eta)/60)} min\n"
+                    f"Download Progress: {progress}\n" \
+                    f"Download Speed: {speed}\n" \
+                    f"ETA: {eta}\n"
                     
             self.manage_dialog.text = text 
             

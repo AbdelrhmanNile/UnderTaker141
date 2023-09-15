@@ -2,7 +2,7 @@ from widgets.core import Plugin
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.textfield import MDTextField
-from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.dialog import MDDialog
 from utils import get_settings, write_settings
 import yaml
@@ -47,11 +47,11 @@ class Settings(Plugin):
         self.layout.add_widget(self.twitch_client_secret)
         
         # buttons
-        self.save_btn = MDRectangleFlatButton(text="Save",on_press=self.save_settings, pos_hint={"center_x": 0.5, "center_y": 0.5}, size_hint=(0.8, 0.00001))
+        self.save_btn = MDRaisedButton(text="Save",on_press=self.save_settings, pos_hint={"center_x": 0.5, "center_y": 0.5}, size_hint=(0.8, 0.00001))
         self.layout.add_widget(self.save_btn)
         
         # update database button, color red, text color black
-        self.update_db_btn = MDRectangleFlatButton(text="Update database",pos_hint={"center_x": 0.5, "center_y": 0.5}, md_bg_color="#ff0000", size_hint=(0.8, 0.00001), text_color=(0, 0, 0, 1))
+        self.update_db_btn = MDRaisedButton(text="Update database",pos_hint={"center_x": 0.5, "center_y": 0.5}, md_bg_color="#ff0000", size_hint=(0.8, 0.00001), text_color=(0, 0, 0, 1))
         self.update_db_btn.bind(on_press=self.update_db)
         self.layout.add_widget(self.update_db_btn)
         

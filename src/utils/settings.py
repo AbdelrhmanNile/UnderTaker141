@@ -1,5 +1,7 @@
 import yaml
 import os
+from bs4 import BeautifulSoup
+import requests
 
 def get_settings_template():
     
@@ -65,4 +67,14 @@ def check_database():
             
         with open(db_file_path, "wb") as f:
             f.write(db_template)
-            
+
+def get_latest_release():
+    link = "https://github.com/AbdelrhmanNile/UnderTaker141/releases/tag/latest"
+    try:
+        page = requests.get(link)
+    except requests.exceptions.ConnectionError:
+        return None, None
+    soup = BeautifulSoup(page.content, "lxml")
+    latest_release = soup.find("h1", class_="d-inline mr-3").text.split(":")[0]
+    latest_release = latest_release.strip()
+    return latest_release, link

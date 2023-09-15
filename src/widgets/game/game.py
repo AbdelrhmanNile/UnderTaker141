@@ -129,22 +129,17 @@ class GameLibraryCard(MDCard, BorderBehavior):
         
     def update_status(self, dt=None):
             
-            if not self.qbt_client.is_connected():
+            connected = self.qbt_client.is_connected()
+            
+            for i in range(1, len(self.manage_dialog.buttons) - 1):
+                self.manage_dialog.buttons[i].disabled = not connected
+            
+            if not connected:
                 text = "qBittorrent not connected, please connect ..."
                 self.manage_dialog.text = text
-                
-                # disable buttons
-                for i, btn in enumerate(self.manage_dialog.buttons):
-                    if i == 0 or i == 4:
-                        continue
-                    btn.disabled = True
                 return
             
-            try:
-                self.torr = self.qbt_client.get_torrent(self.magnet)
-            except Exception as e:
-                self.manage_dialog.text = "qBittorrent not connected, please connect ..."
-                return
+            self.torr = self.qbt_client.get_torrent(self.magnet)
             
             progress = f"{self.torr.progress*100:.1f}%"
             speed = f"{self.torr.dlspeed//1000} KB/s"

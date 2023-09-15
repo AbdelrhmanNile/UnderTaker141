@@ -7,10 +7,10 @@ from kivymd.uix.screenmanager import MDScreenManager
 from kivy.uix.screenmanager import FadeTransition
 from kivymd.uix.navigationdrawer import MDNavigationLayout
 from kivymd.color_definitions import colors
-
+from kivymd.toast.kivytoast.kivytoast import toast
 from kivy.clock import Clock
 from widgets.navigation import Rail
-from utils import JCQbt, get_settings
+from utils import JCQbt, get_settings, get_latest_release
 from .plugin import Plugin, PluginData
 
 from importlib import import_module
@@ -21,7 +21,6 @@ class MainScreen(MDScreen):
     def __init__(self, version, **kwargs):
         super().__init__(**kwargs)
         self.version = version
-        
         
         settings = get_settings()
         self.qbt_client = JCQbt(settings["qbittorrent_api"]["host"],
@@ -71,6 +70,13 @@ class MainScreen(MDScreen):
         self.add_widget(self.nav_layout)
         
         self.qbt_checker = Clock.schedule_interval(self.update_qbt_status, 5)
+        
+        latest_release = get_latest_release()
+        if latest_release[0] is not None:
+            if latest_release[0] != self.version:
+                toast(f"New Release Availble: {latest_release[0]}\n{latest_release[1]}", duration=5.0)
+        else:
+            toast("No Internet Connection", duration=5.0)
         
         
     def load_plugins(self) -> dict: # load plugins from plugins.yaml

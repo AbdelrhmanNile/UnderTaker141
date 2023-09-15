@@ -124,7 +124,7 @@ class MainScreen(MDScreen):
     
     def update_qbt_status(self, dt=None):
         
-        connected = self.qbt_client.is_connected()
+        connected = self.qbt_client.connected
         if connected:
             self.title_version.text = f"UnderTaker141 {self.version}"
             self.boxlayout2.md_bg_color = colors["BlueGray"]["700"]

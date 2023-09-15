@@ -2,7 +2,6 @@ import qbittorrentapi
 import os
 import re
 import time
-from kivy.clock import Clock
 
 class JCQbt:
     """
@@ -23,9 +22,7 @@ class JCQbt:
           
         self.init_client()
         self.save_path = save_path
-        
-        self.connection_check = Clock.schedule_interval(self.check_connection, 10)
-        
+                
     
     def init_client(self):
         if self.qbt_client is not None:
@@ -85,6 +82,7 @@ class JCQbt:
         return self.qbt_client.torrents_info(torrent_hashes=self.get_hash(url))[0]
 
     def is_connected(self):
+        self.check_connection()
         return self.connected
     
     def count(self):

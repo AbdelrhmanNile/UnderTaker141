@@ -88,4 +88,4 @@ class Settings(Plugin):
         updater = ReleasesFeed(twitch_client_id=self.settings_yaml["igdb"]["twitch_client_id"], twitch_client_secret=self.settings_yaml["igdb"]["twitch_client_secret"], db_object=db)
         t = Thread(target=updater.pipeline)
         t.start()
-        instance.text = "Done! please restart the app"
+        instance.text = "Database is being updated, please DO NOT close the application"

@@ -13,6 +13,7 @@ from kivy.utils import get_color_from_hex
 from utils import JCQbt, get_settings
 from database import Database
 import os
+import html
 
 from widgets.border import BorderBehavior
 
@@ -169,6 +170,7 @@ class GameLibraryCard(MDCard, BorderBehavior):
         self.manage_dialog.dismiss()
         
     def query_game(self, name):
+        name = html.unescape(name)
         query_result = db.get_game(name)
         if len(query_result) == 1:
             return query_result[0]

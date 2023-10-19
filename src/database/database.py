@@ -83,6 +83,9 @@ class Database:
         # search by matching incomplete name
         return self.session.query(Game).filter(Game.name.ilike(f'%{name}%')).all()
     
+    def get_library_game(self, name):
+        return self.session.query(GamesInfo).filter(GamesInfo.name.ilike(f'%{name}%')).all()
+    
     def get_game_by_magnet(self, magnet):
         return self.session.query(Game).filter(Game.magnet == magnet).first()
     

@@ -86,7 +86,7 @@ class GameLibraryCard(MDCard, BorderBehavior):
         self.game_obj = self.query_game(self.game_name)
         
         self.torr = None
-        self.magnet = self.game_obj.magnet
+        self.magnet = game_torrent.magnet_uri
         self.cover_link = self.game_obj.cover
         self.save_path = game_torrent.content_path
         self.status = game_torrent.state
@@ -171,7 +171,7 @@ class GameLibraryCard(MDCard, BorderBehavior):
         
     def query_game(self, name):
         name = html.unescape(name)
-        query_result = db.get_game(name)
+        query_result = db.get_library_game(name)
         if len(query_result) == 1:
             return query_result[0]
         
@@ -182,7 +182,7 @@ class GameLibraryCard(MDCard, BorderBehavior):
         partial_name = name.split(" ")
         partial_name = partial_name[:len(partial_name)//2]
         partial_name = " ".join(partial_name)
-        return db.get_game(partial_name)[0]
+        return db.get_library_game(partial_name)[0]
     
     def delete(self, magnet):
         self.clock.cancel()

@@ -13,14 +13,14 @@ just download the game and run it! everything is pre-configuired for you thank's
 
 # IMPORTANT
 
-- please read [johncena141's guide](https://github.com/jc141x/jc141-bash/tree/master/setup) to understand more about how their repacks work, and double check the dependencies for their repacks
+- please read [johncena141's guide](https://gitlab.com/jc141x/setup/-/tree/main) to understand more about how their repacks work, and double check the dependencies for their repacks
 
 - if you are using a VPN, do not forget to set the network interface in qbittorent to your VPN interface.
 
 # Dependencies
 - appimage launcher
 - latest qbitorent with webui enabled
-- all the dependencies for johncena141's repacks (check their [guide](https://github.com/jc141x/jc141-bash/blob/master/setup/en/readme.md)
+- all the dependencies for johncena141's repacks (check their [guide](https://gitlab.com/jc141x/setup/-/blob/main/README.md)
 
 # Installation
 - download the latest release from [here](https://github.com/AbdelrhmanNile/UnderTaker141/releases)

@@ -17,7 +17,7 @@ class ReleasesFeed:
         self.twitch_client_secret = twitch_client_secret
         self.db = db_object
         
-        self.feed_json_url = "https://github.com/jc141x/releases-feed/releases/download/feeds/releases.json"
+        self.feed_json_url = "https://github.com/jc141x/releases-feed/releases/latest/download/releases.json"
  
         r = requests.post(f"https://id.twitch.tv/oauth2/token?client_id={self.twitch_client_id}&client_secret={self.twitch_client_secret}&grant_type=client_credentials")
         

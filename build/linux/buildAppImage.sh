@@ -26,6 +26,7 @@ PYTHON_PATH='/usr/bin/python3.11'
 ###################
 
 # install os-level depends
+sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update; sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
 
 uname -a
@@ -51,7 +52,7 @@ rm -rf /tmp/kivy_appdir
 
 # We use this python-appimage release as a base for building our own python
 # AppImage. We only have to add our code and depends to it.
-cp build/deps/python3.11.4-cp311-cp311-manylinux2014_x86_64.AppImage /tmp/python.AppImage
+cp build/deps/python.AppImage /tmp/python.AppImage
 chmod +x /tmp/python.AppImage
 /tmp/python.AppImage --appimage-extract
 mv squashfs-root /tmp/kivy_appdir

@@ -56,8 +56,8 @@ class ReleasesFeed:
         for record in feed:
             formated_feed.append(schema.copy())
             formated_feed[-1]["name"] = record["name"]
-            formated_feed[-1]["size"] = record["size"]
-            formated_feed[-1]["magnet"] = record["magnet"]    
+            formated_feed[-1]["size"] = record["total_size"]
+            formated_feed[-1]["magnet"] = record["magnet_link"]    
             
         return formated_feed
     
@@ -171,7 +171,8 @@ class ReleasesFeed:
         # merge results
         json_array = []
         for i in range(num):
-            json_array.extend(results[i])
+            if results[i] is not None:
+                json_array.extend(results[i])
         
         return json_array
 

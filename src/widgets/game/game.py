@@ -4,13 +4,13 @@ from kivy.uix.image import AsyncImage
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDIconButton, MDRaisedButton
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.list import MDList, ImageLeftWidgetWithoutTouch, IconRightWidget, OneLineAvatarIconListItem
 from kivymd.color_definitions import colors
 from kivymd.toast.kivytoast.kivytoast import toast
+from kivymd.uix.screenmanager import MDScreenManager
 
 from kivy.clock import Clock
 from kivy.utils import get_color_from_hex
-from utils import JCQbt, get_settings
+from utils import get_settings
 from database import Database
 import os
 import html
@@ -38,7 +38,7 @@ class GameCard(MDCard, BorderBehavior):
         
         self.md_bg_color = "#00000000"
         
-        self.name = MDLabel(text=game_obj.name if len(game_obj.name) < 13 else game_obj.name[:15] + "..", halign="left", size_hint=(1, 0.1), padding=(5, 0))
+        self.name = MDLabel(text=game_obj.name if len(game_obj.name) < 22 else game_obj.name[:20] + "..", halign="left", size_hint=(1, 0.1), padding=(5, 0))
         self.cover = AsyncImage(source=game_obj.cover, size_hint=(0.9, 0.9), pos_hint={"center_x":0.5, "center_y":0.5})
         self.magnet = game_obj.magnet 
         
@@ -69,8 +69,12 @@ class GameCard(MDCard, BorderBehavior):
         toast(f"Downloading {self.game_obj.name} ...", duration=3.0)
         instance.disabled = True
         
-        library = self.parent.parent.parent.parent.parent.get_screen("Library")
-        library.layout.add_widget(GameLibraryCard(game_torrent=self.qbt_client.get_torrent(self.magnet), qbt_client=self.qbt_client))
+        screen_manager = None
+        iterator = self.walk_reverse(loopback=False)
+        while type(screen_manager) is not MDScreenManager:
+            screen_manager = next(iterator)
+        library = screen_manager.get_screen("Library")
+        library.update_library()
         
 
 

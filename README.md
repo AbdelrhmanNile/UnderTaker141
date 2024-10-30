@@ -20,11 +20,28 @@ just download the game and run it! everything is pre-configuired for you thank's
 # Dependencies
 - appimage launcher
 - latest qbitorent with webui enabled
-- all the dependencies for johncena141's repacks (check their [guide](https://gitlab.com/jc141x/setup/-/blob/main/README.md)
+- all the dependencies for johncena141's repacks (check their [guide](https://gitlab.com/jc141x/setup/-/blob/main/README.md))
 
 # Installation
 - download the latest release from [here](https://github.com/AbdelrhmanNile/UnderTaker141/releases)
 - run the appimage and enjoy!
+
+# Steamdeck extra steps
+
+- to edit the read-only image ([details](https://help.steampowered.com/en/faqs/view/671A-4453-E8D2-323C)):
+
+```
+passwd
+sudo steamos-readonly disable
+```
+- install yay and dwarfs compatible version:
+```
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+git checkout 96f90180a3cf72673b1769c23e2c74edb0293a9f
+makepkg -si
+yay -S dwarfs-bin
+```
 
 # Configuration
 after you run the appimage head to the settings tab.

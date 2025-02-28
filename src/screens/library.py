@@ -1,17 +1,10 @@
 from widgets.core import Plugin
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.gridlayout import MDGridLayout
 from widgets.game import GameLibraryCard
-from kivymd.uix.recycleview import MDRecycleView
-from kivymd.uix.list import MDList
-from kivymd.uix.label import MDLabel
+from widgets.gamelist import Gamelist
 from kivymd.uix.button import MDRectangleFlatButton
 from kivy.clock import Clock
-from utils import JCQbt
-from utils import get_settings
 
 from database import Database
-import time
 
 db = Database("games.db")
 
@@ -26,40 +19,39 @@ class Library(Plugin):
         self.qbt_client = qbt_client
         self.qbt_client.check_connection()
         
-        self.layout = MDGridLayout(cols=8, padding="12dp", spacing="30dp", adaptive_height=True, adaptive_width=True)
-        
-        self.scroll = MDRecycleView()
-                
-        self.scroll.add_widget(self.layout)
-        
-        self.add_widget(self.scroll)
+        self.gamelist = Gamelist()
+        self.gamelist.search_bind(self.update_library)
+        self.add_widget(self.gamelist)
         
         self.load_library()
         
         self.count_check = Clock.schedule_interval(self.check_counts, 5)
             
             
-    def load_library(self):
+    def load_library(self, instance=None):
         if not self.qbt_client.is_connected():
-            self.layout.add_widget(MDRectangleFlatButton(text="Please connect to Qbittorrent to view your library", on_press=self.update_library, size_hint=(None, None), size=(500, 100), pos_hint={"center_x": 0.5, "center_y": 0.5}))
+            self.gamelist.add_widget(MDRectangleFlatButton(text="Please connect to Qbittorrent to view your library", on_press=self.update_library, size_hint=(None, None), size=(500, 100), pos_hint={"center_x": 0.5, "center_y": 0.5}))
             return
         torrs = self.qbt_client.get_torrents()
         for game in torrs:
-            self.layout.add_widget(GameLibraryCard(game_torrent=game, qbt_client=self.qbt_client))            
+            gameCard = GameLibraryCard(game_torrent=game, qbt_client=self.qbt_client)
+            if getattr(instance, "text", "").lower() in gameCard.game_name.lower():
+                self.gamelist.add_game(gameCard)
+            else:
+                gameCard = None
+        if instance :
+            instance.text = ""        
             
     def update_library(self, instance=None):
         if not self.qbt_client.is_connected():
             return
-        self.layout.clear_widgets()
-        self.load_library()
-        
-    def library_count(self):
-        return len(self.layout.children)
-    
+        self.gamelist.clear_list()
+        self.load_library(instance)
+  
     def check_counts(self, dt=None):
         try:
             torrents_count = self.qbt_client.count()
         except Exception as e:
             return
-        if self.library_count() > torrents_count:
+        if self.gamelist.game_count() > torrents_count:
             self.update_library()

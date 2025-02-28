@@ -40,3 +40,4 @@ after you run the appimage head to the settings tab.
 
 # Updating the database
 to update the database and fetch new releases by jc141 head to the settings tab and click on the "update database" button, this will take a few minutes and will freeze the app (and might freeze your system), just wait until it finishes and everything will return to normal.
+

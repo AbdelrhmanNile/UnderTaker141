@@ -83,7 +83,8 @@ rm /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 
 cat /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
-
+rm /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
+rsync -a build/appdata.xml /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
 
 # change AppRun so it executes our app
 mv /tmp/kivy_appdir/AppRun /tmp/kivy_appdir/AppRun.orig

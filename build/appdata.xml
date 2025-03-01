@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>com.example.python</id>
+    <metadata_license>MIT</metadata_license>
+    <project_license>Python-2.0</project_license>
+    <name>Python 3.11</name>
+    <summary>A standalone Python 3.11 runtime</summary>
+    <description>
+        <p>Python 3.11 packaged as an AppImage, allowing you to run a full Python environment without installation. It includes standard libraries and supports script execution and interactive development.</p>
+    </description>
+    <launchable type="desktop-id">python3.11.desktop</launchable>
+    <url type="homepage">https://python.org</url>
+    <provides>
+        <binary>python3.11</binary>
+    </provides>
+    <developer_name>Example Developer</developer_name>
+    <developer_id>com.example</developer_id>
+    <content_rating type="oars-1.1"/>
+</component>

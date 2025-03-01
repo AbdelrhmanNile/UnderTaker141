@@ -27,11 +27,16 @@ PYTHON_PATH='/usr/bin/python3.11'
 
 # install os-level depends
 sudo apt-get update; sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
+sudo apt install --only-upgrade libglib2.0-0
+sudo apt reinstall libxmlb2
+
 
 uname -a
 cat /etc/issue
 which python
 which python3.11
+ldconfig -p | grep libglib
+
 
 # setup a virtualenv to isolate our app's python depends
 #${PYTHON_PATH} -m pip install --upgrade --user pip setuptools

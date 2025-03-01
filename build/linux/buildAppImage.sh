@@ -82,6 +82,7 @@ rm /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 # copy our desktop file to the AppDir
 rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 
+cat /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
 
 
 # change AppRun so it executes our app

@@ -1,3 +1,4 @@
+import getpass
 import yaml
 import os
 from bs4 import BeautifulSoup
@@ -11,12 +12,12 @@ def get_settings_template():
     
     with open(settings_path) as f:
         settings = yaml.safe_load(f)
-        settings["general"]["save_path"] = f"/home/{os.getlogin()}/Downloads"
+        settings["general"]["save_path"] = f"/home/{getpass.getuser()}/Downloads"
         return settings
     
 def write_settings(settings):
     
-    user_name = os.getlogin()
+    user_name = getpass.getuser()
     config_path = f"/home/{user_name}/.config/undertaker141"
     
     settings_path = os.path.join(config_path, "settings.yaml")
@@ -25,7 +26,7 @@ def write_settings(settings):
         yaml.dump(settings, f)
         
 def check_config():
-    user_name = os.getlogin()
+    user_name = getpass.getuser()
     config_path = f"/home/{user_name}/.config/undertaker141"
     
     # Check if config directory exists
@@ -41,7 +42,7 @@ def check_config():
         write_settings(settings)
         
 def get_settings():
-    user_name = os.getlogin()
+    user_name = getpass.getuser()
     config_path = f"/home/{user_name}/.config/undertaker141"
     
     settings_path = os.path.join(config_path, "settings.yaml")
@@ -50,7 +51,7 @@ def get_settings():
         return yaml.safe_load(f)
     
 def check_database():
-    user_name = os.getlogin()
+    user_name = getpass.getuser()
     config_path = f"/home/{user_name}/.config/undertaker141"
     
     db_file_path = os.path.join(config_path, "games.db")

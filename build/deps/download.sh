@@ -36,7 +36,7 @@ ${PYTHON} -m pip install --upgrade pip
 
 
 # misc linux
-${WGET} https://github.com/niess/python-appimage/releases/download/python3.11/python3.11.4-cp311-cp311-manylinux2014_x86_64.AppImage
+${WGET} --output-document=python.AppImage https://github.com/niess/python-appimage/releases/download/python3.11/python3.11.9-cp311-cp311-manylinux2014_x86_64.AppImage
 ${WGET} https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
 ${WGET} --output-document=squashfs4.4.tar.gz https://sourceforge.net/projects/squashfs/files/squashfs/squashfs4.4/squashfs4.4.tar.gz/download
 

@@ -37,6 +37,8 @@ cat /etc/issue
 which python
 which python3.11
 ldconfig -p | grep libglib
+export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
 
 
 # setup a virtualenv to isolate our app's python depends

@@ -28,11 +28,18 @@ PYTHON_PATH='/usr/bin/python3.11'
 # install os-level depends
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update; sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
+sudo apt install --only-upgrade libglib2.0-0
+sudo apt reinstall libxmlb2
+
 
 uname -a
 cat /etc/issue
 which python
 which python3.11
+ldconfig -p | grep libglib
+export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+
 
 # setup a virtualenv to isolate our app's python depends
 #${PYTHON_PATH} -m pip install --upgrade --user pip setuptools
@@ -75,7 +82,9 @@ rm /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 # copy our desktop file to the AppDir
 rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
 
-
+cat /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
+rm /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
+rsync -a build/appdata.xml /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
 
 # change AppRun so it executes our app
 mv /tmp/kivy_appdir/AppRun /tmp/kivy_appdir/AppRun.orig

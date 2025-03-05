@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-    <id>com.example.python</id>
+    <id>python3.11.4</id>
     <metadata_license>MIT</metadata_license>
     <project_license>Python-2.0</project_license>
     <name>Python 3.11</name>
@@ -8,7 +8,7 @@
     <description>
         <p>Python 3.11 packaged as an AppImage, allowing you to run a full Python environment without installation. It includes standard libraries and supports script execution and interactive development.</p>
     </description>
-    <launchable type="desktop-id">python3.11.desktop</launchable>
+    <launchable type="desktop-id">python3.11.4.desktop</launchable>
     <url type="homepage">https://python.org</url>
     <provides>
         <binary>python3.11</binary>

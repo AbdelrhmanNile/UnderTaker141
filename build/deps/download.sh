@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 ################################################################################
 # File:    build/deps/download.sh
 # Purpose: Use this script to download the files in this dir. Useful if, for
@@ -21,7 +22,6 @@ WGET="/usr/bin/wget --retry-on-host-error --retry-connrefused"
 PYTHON="/usr/bin/python3"
 
 tmpDir=`mktemp -d`
-pushd "${tmpDir}"
 
 # first get some info about our internet connection
 ${CURL} -s https://ifconfig.co/country | head -n1
@@ -36,8 +36,13 @@ ${PYTHON} -m pip install --upgrade pip
 
 
 # misc linux
-${WGET} --output-document=python.AppImage https://github.com/niess/python-appimage/releases/download/python3.11/python3.11.9-cp311-cp311-manylinux2014_x86_64.AppImage
+${WGET} --output-document=python.AppImage https://github.com/niess/python-appimage/releases/download/python3.11/python3.11.11-cp311-cp311-manylinux2014_x86_64.AppImage
 ${WGET} https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
 ${WGET} --output-document=squashfs4.4.tar.gz https://sourceforge.net/projects/squashfs/files/squashfs/squashfs4.4/squashfs4.4.tar.gz/download
 
+#file size test
+if [ -s python.AppImage ]; then
+    echo "ERROR python.AppImage file empty"
+    exit 1
+fi
 

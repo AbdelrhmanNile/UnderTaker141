@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 ################################################################################
 # File:    linux/buildAppImage.sh
 # Purpose: Builds a self-contained AppImage executable for a simple Hello World
@@ -28,16 +29,12 @@ PYTHON_PATH='/usr/bin/python3.11'
 # install os-level depends
 sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt-get update; sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
-sudo apt install --only-upgrade libglib2.0-0
-sudo apt reinstall libxmlb2
 
 
 uname -a
 cat /etc/issue
 which python
 which python3.11
-ldconfig -p | grep libglib
-export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 
 
@@ -78,13 +75,9 @@ rm /tmp/kivy_appdir/usr/share/icons/hicolor/256x256/apps/python.png
 rsync -a undertaker.png /tmp/kivy_appdir/usr/share/icons/hicolor/256x256/apps/python.png
 
 #delete the default desktop file
-rm /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
+rm /tmp/kivy_appdir/usr/share/applications/python3.11.11.desktop
 # copy our desktop file to the AppDir
-rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/usr/share/applications/python3.11.4.desktop
-
-cat /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
-rm /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
-rsync -a build/appdata.xml /tmp/kivy_appdir/usr/share/metainfo/python3.11.4.appdata.xml
+rsync -a build/UnderTaker141.desktop /tmp/kivy_appdir/python.desktop
 
 # change AppRun so it executes our app
 mv /tmp/kivy_appdir/AppRun /tmp/kivy_appdir/AppRun.orig
@@ -145,8 +138,16 @@ chmod +x /tmp/appimagetool.AppImage
 
 # create the dist dir for our result to be uploaded as an artifact
 # note tha gitlab will only accept artifacts that are in the build dir (cwd)
-mkdir dist
+mkdir -p dist
 /tmp/appimagetool.AppImage /tmp/kivy_appdir dist/UnderTaker141.AppImage
+
+###################
+# Unpack to test  #
+###################
+
+dist/UnderTaker141.AppImage --appimage-extract
+
+rm -rf squashfs-root
 
 #######################
 # OUTPUT VERSION INFO #

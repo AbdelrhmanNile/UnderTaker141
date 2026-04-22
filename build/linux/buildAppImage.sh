@@ -28,7 +28,8 @@ PYTHON_PATH='/usr/bin/python3.11'
 
 # install os-level depends
 sudo add-apt-repository ppa:deadsnakes/ppa -y
-sudo apt-get update; sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
+sudo apt-get update; 
+sudo apt-get -y install python3.11 python3-pip python3-setuptools wget rsync fuse
 
 
 uname -a

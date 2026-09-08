@@ -2,10 +2,11 @@ import requests
 import json
 from .thread_with_return import ThreadWithReturnValue
 from igdb.wrapper import IGDBWrapper
-import os
 import numpy as np
 import time
 import unidecode
+import pandas as pd
+import re
 
 NO_COVER = "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/nocover.png"
 
@@ -18,8 +19,8 @@ class ReleasesFeed:
         self.twitch_client_id = twitch_client_id
         self.twitch_client_secret = twitch_client_secret
         self.db = db_object
-        
-        self.feed_json_url = "https://github.com/jc141x/releases-feed/releases/latest/download/releases.json"
+
+        self.feed_source_url = "https://codeberg.org/kintsukuroi/jc141-listing/raw/branch/main/table.md"
  
         r = requests.post(f"https://id.twitch.tv/oauth2/token?client_id={self.twitch_client_id}&client_secret={self.twitch_client_secret}&grant_type=client_credentials")
         
@@ -39,11 +40,22 @@ class ReleasesFeed:
     
     
     def get_latest_feed(self):
-        r = requests.get(self.feed_json_url)
-        return r.json()
+        r = requests.get(self.feed_source_url)
+        return r.text
     
     def format_feed(self, feed):
-        
+        pattern = r"\| ([^\|]+) \| ([^\|]+) \| ([^\|]+) \|"
+
+        # Use the findall function to extract all rows that match the pattern
+        matches = re.findall(pattern, feed)
+
+        # Extract the header and data rows
+        header = matches[0]
+        data = matches[1:]
+
+        # Create a pandas DataFrame using the extracted header and data rows
+        df = pd.DataFrame(data, columns=header)
+
         formated_feed = []
         
         schema = {
@@ -55,12 +67,11 @@ class ReleasesFeed:
             "summary": "",
         }
         
-        for record in feed:
+        for index, record in df.iterrows():
             formated_feed.append(schema.copy())
-            formated_feed[-1]["name"] = record["name"]
-            formated_feed[-1]["size"] = record["total_size"]
-            formated_feed[-1]["magnet"] = record["magnet_link"]    
-            
+            formated_feed[-1]["name"] = record["Name"]
+            formated_feed[-1]["size"] = record["Size"]
+            formated_feed[-1]["magnet"] = record["Magnet"].split("(")[1][0:-1]
         return formated_feed
     
     def get_cover_and_summary(self, game):
